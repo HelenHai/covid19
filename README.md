@@ -1,2 +1,3 @@
 # covid19
-MSc project
+
+Visualising covid-19 data
