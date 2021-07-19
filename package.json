@@ -3,19 +3,22 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "babel-node ./bin/www",
     "build": "cross-env NODE_ENV=development webpack --config frontend/webpack.config.js",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
     "frontend": "cross-env NODE_ENV=development webpack serve --config frontend/webpack.config.js --color --progress --hot",
     "server": "nodemon --exec babel-node ./bin/www",
-    "dev": "concurrently \"npm run server\" \"npm run frontend\""
+    "start": "babel-node ./bin/www"
   },
   "dependencies": {
+    "ant-design-vue": "^2.2.2",
     "babel-preset-es2015": "^6.24.1",
     "cookie-parser": "~1.4.4",
     "core-js": "^3.6.5",
     "debug": "~2.6.9",
+    "element-plus": "^1.0.2-beta.55",
     "express": "~4.16.1",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -31,6 +34,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
     "html-webpack-plugin": "^5.3.2",
+    "less": "^2.7.3",
+    "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^2.1.0",
     "nodemon": "^2.0.10",
     "vue": "^3.0.0",
