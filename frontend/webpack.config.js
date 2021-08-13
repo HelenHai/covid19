@@ -1,6 +1,6 @@
 const path = require('path')
 
-const HtmlwebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
@@ -38,18 +38,27 @@ webpackConfig = {
                 /node_modules/.test(file) && !/\.vue\.js/.test(file)
             ),
         }, {
-            test: /\.css$/,
+            test: /\.css$/i,
             use: [
                 'vue-style-loader',
-                'css-loader'
+                'css-loader',
             ]
-        },{
+        }, {
             test: /\.less$/,
             use: [
                 'vue-style-loader',
                 'css-loader',
                 'less-loader'
             ]
+        }, {
+            test: /\.(ttf|eot|woff|woff2?|svg)$/,
+            use: [{
+                loader: 'url-loader',
+                options: {
+                    limit: 5000, // fonts file size <= 5KB ? use 'base64' : svg
+                    outputPath: 'fonts/'
+                },
+            }]
         }, {
             test: /\.(jpe?g|png|gif)$/,
             use: [{
@@ -67,7 +76,7 @@ webpackConfig = {
         new VueLoaderPlugin(),
 
         // 输出 index.html 到output
-        new HtmlwebpackPlugin({
+        new HtmlWebpackPlugin({
             filename: 'index.html',
             template: '/frontend/public/index.html'
         })
