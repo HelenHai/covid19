@@ -1,13 +1,23 @@
 <template>
-  <div>111</div>
+    <world-wide-info></world-wide-info>
 </template>
 
 <script>
+import WorldWideInfo from './world/Index';
 export default {
-  name: "Index"
-}
+    name: "Dashboard",
+    components: {
+        WorldWideInfo
+    }
+};
 </script>
 
 <style scoped>
+.chart {
+    height: 400px;
+}
 
+.el-row {
+    margin: 30px 0;
+}
 </style>

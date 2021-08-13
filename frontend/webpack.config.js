@@ -38,12 +38,12 @@ webpackConfig = {
                 /node_modules/.test(file) && !/\.vue\.js/.test(file)
             ),
         }, {
-            test: /\.css$/,
+            test: /\.css$/i,
             use: [
                 'vue-style-loader',
-                'css-loader'
+                'css-loader',
             ]
-        },{
+        }, {
             test: /\.less$/,
             use: [
                 'vue-style-loader',
