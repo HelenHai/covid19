@@ -1,12 +1,13 @@
-import { createApp, h } from 'vue'
+import {createApp, h} from 'vue'
+import axios from "axios";
 import store from './store/index'
 import router from './router/index'
 import ElementPlus from 'element-plus'
 import ECharts from 'vue-echarts'
-import { use } from "echarts/core"
+import {use} from "echarts/core"
 import App from './App.vue'
 
-import { CanvasRenderer,SVGRenderer } from 'echarts/renderers'
+import {CanvasRenderer, SVGRenderer} from 'echarts/renderers'
 import {
     GridComponent,
     TooltipComponent,
@@ -37,6 +38,9 @@ use([
 ])
 
 const app = createApp(App)
+
+app.config.globalProperties.$axios = axios
+
 app.use(ElementPlus)
 app.use(router)
 app.use(store)
