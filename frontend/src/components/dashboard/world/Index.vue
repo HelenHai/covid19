@@ -7,7 +7,7 @@
                 </el-card>
             </el-col>
             <el-col :span="7" class="box-card">
-                <el-card>
+                <el-card class="number">
                     <template #header>
                         <div class="card-header">
                             <span>{{activeCountry}}</span>
@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .map-bg {
     background-color: #404a59;
 }
@@ -66,9 +66,13 @@ export default {
     text-transform:capitalize;
     font-weight: bolder;
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-    .el-icon-remove {
-        color: #F56C6C;
-        font-size:18px;
-    }
+
+}
+.el-icon-remove {
+    color: #F56C6C;
+    font-size:18px;
+}
+.number >>> .el-card__body{
+    padding: 5px 10px;
 }
 </style>

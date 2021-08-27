@@ -44,22 +44,11 @@ router.get('/getVariantsData', (req, res) => {
     })
 })
 
-router.get('/getGeo',(req,res,next)=>{
-    function format(data) {
-        let arr = []
-        data.forEach((item)=>{
-            arr.push({
-                [item.city]:[item['lati'], item['longti']]
-            })
-        })
-        return arr
-    }
-
-    get('/getGeo').then((ret)=>{
+router.get('/getNumbers',(req,res,next)=>{
+    get('/getNumbers',{params: {name: req.query.name}} ).then((ret)=>{
         let {code, msg, data} = ret
         if(code === 0) {
-            let r = format(data)
-            res.json({code: 200, data: r, msg: "success"})
+            res.json({code: 200, data:data[0], msg: "success"})
         } else {
             res.json({code: 200, msg})
         }

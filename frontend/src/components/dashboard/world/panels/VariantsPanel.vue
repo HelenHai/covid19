@@ -168,7 +168,7 @@ export default defineComponent({
 
                     this.$notify({
                         title: 'Notification',
-                        message: 'No Variants information in this country',
+                        message: 'No Variants information in this area',
                         type:'info'
                     })
                 }
@@ -183,7 +183,7 @@ export default defineComponent({
 <style scoped>
 .panel-container {
     line-height: 20px;
-    height: 420px;
+    height: 435px;
 }
 
 .title {

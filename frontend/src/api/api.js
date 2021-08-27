@@ -8,4 +8,4 @@ export const UPLOAD_USER_CARD = (params) => uploader('service-core/user_upload_c
 export const DELETE_BOOK = (params) => del(`service-core/book_list/${params.id}`)
 
 export const getVariantsDataApi = (params) => get('/getVariantsData', {params: {name:params}})
-export const getGeoApi = () => get('/getGeo')
+export const getNumberApi = (params) => get('/getNumbers',{params: {name:params}})

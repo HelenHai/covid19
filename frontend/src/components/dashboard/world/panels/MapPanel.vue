@@ -92,14 +92,15 @@ export default {
         ]),
         ...mapActions([
             'getVariantsData',
-            'getGeo',
+            'getNumbers',
         ]),
         handleClick({ name }) {
             this.setActiveCountry(name)
             this.getVariantsData(name)
+            this.getNumbers(name)
         },
         handleZrClick(...args) {
-            console.log("click from zrender", ...args);
+            // console.log("click from zrender", ...args);
         },
         toggleRenderer() {
             if (this.initOptions.renderer === "canvas") {

@@ -1,6 +1,6 @@
 // initial state
 import {
-    getGeoApi,
+    getGeoApi, getNumberApi,
     getVariantsDataApi
 } from '../../api/api'
 
@@ -8,7 +8,7 @@ const state = () => ({
     activeCountry: 'china',
     countryVariantData:{},
     piePanelIsVisible: true,
-    lan_long: {},
+    numberData: {},
 })
 
 const getters = {}
@@ -22,8 +22,8 @@ const mutations = {
     setPiePanelIsVisible(state,payload) {
         state.piePanelIsVisible = payload
     },
-    setGeo(state,payload) {
-        state.lan_long = payload
+    setNumber(state,payload) {
+        state.numberData = payload
     }
 }
 const actions = {
@@ -32,10 +32,10 @@ const actions = {
 
         commit('setVariantsData', response.data)
     },
-    async getGeo({commit}, args) {
-        const response = await getGeoApi(args)
+    async getNumbers({commit}, args) {
+        const response = await getNumberApi(args)
 
-        commit('setGeo', response.data)
+        commit('setNumber', response.data)
     },
 }
 
