@@ -1,56 +1,77 @@
 <template>
-    <figure style="background-color: #404a59">
+    <div>
         <v-chart
+            id="map"
             class="chart"
             :option="map"
             :init-options="initOptions"
             ref="map"
             autoresize
+            @click="handleClick"
+            @legendselectchanged="handleLegendChanged"
         />
-    </figure>
-
+        <el-checkbox-group v-model="checkedLegend" class="checkbox">
+            <el-checkbox
+                v-for="item in legendList"
+                :label="item"
+                :key="item"
+                @change="handleCheckboxChange(item)"
+                class="checkbox-item"
+            >{{ item }}
+            </el-checkbox>
+        </el-checkbox-group>
+    </div>
 </template>
 
 <script>
+import {init} from 'echarts'
+import axios from 'axios'
 import qs from "qs";
-import VChart, { THEME_KEY } from "vue-echarts";
-import {ref} from "vue";
-import { use, registerMap, registerTheme } from "echarts/core";
-import { MapChart, ScatterChart, EffectScatterChart } from "echarts/charts";
+import VChart, {THEME_KEY} from "vue-echarts";
+import {use, registerMap, registerTheme} from "echarts/core";
+import {MapChart, ScatterChart, EffectScatterChart, CustomChart, PieChart} from "echarts/charts";
 
-import { GeoComponent,LegendComponent} from "echarts/components";
-
-import {CanvasRenderer, SVGRenderer} from "echarts/renderers";
-
-import getBar from "../../common/data/bar";
+import {GeoComponent, LegendComponent} from "echarts/components";
 
 import map from "../graphics/map";
+import 'echarts/extension/bmap/bmap'
 // custom theme
 import theme from "../../common/assets/theme.json";
 // Map of China
-import chinaMap from "../../common/assets/china.json";
+import chinaMap from "../../common/assets/country/china.json";
+import AfghanistanMap from "../../common/assets/country/Afghanistan.json";
 import worldMap from "../../common/assets/world.json";
+
+import {mapState, mapActions, mapMutations} from 'vuex'
 
 use([
     MapChart,
+    PieChart,
     ScatterChart,
     EffectScatterChart,
     GeoComponent,
     LegendComponent,
-    CanvasRenderer,
-    SVGRenderer,
+    CustomChart,
 ]);
 // registering map data
 registerMap("china", chinaMap);
+registerMap("afghanistan", AfghanistanMap);
 registerMap("world", worldMap);
 
 // registering custom theme
 registerTheme("ovilia-green", theme);
 
+const LegendOptions = ["Cases", "Vaccinations"];
+
 export default {
     name: 'MapItem',
     components: {
         VChart,
+    },
+    computed: {},
+    setup:()=>{
+    },
+    created() {
     },
     data() {
         const options = qs.parse(location.search, {ignoreQueryPrefix: true});
@@ -60,14 +81,26 @@ export default {
             initOptions: {
                 renderer: options.renderer || "canvas"
             },
+            checkedLegend: ["Cases"],
+            legendList: LegendOptions,
+            CheckboxFillColor: '#ddb926',
         };
     },
     methods: {
-        handleClick(...args) {
-            console.log("click from echarts", ...args);
+        ...mapMutations([
+            'setActiveCountry'
+        ]),
+        ...mapActions([
+            'getVariantsData',
+            'getNumbers',
+        ]),
+        handleClick({ name }) {
+            this.setActiveCountry(name)
+            this.getVariantsData(name)
+            this.getNumbers(name)
         },
         handleZrClick(...args) {
-            console.log("click from zrender", ...args);
+            // console.log("click from zrender", ...args);
         },
         toggleRenderer() {
             if (this.initOptions.renderer === "canvas") {
@@ -87,35 +120,14 @@ export default {
             };
             this.open = true;
         },
-        startActions() {
-            let dataIndex = -1;
-            const pie = this.$refs.pie;
-            if (!pie) {
-                return;
-            }
-            const dataLen = pie.option.series[0].data.length;
-            this.actionTimer = setInterval(() => {
-                pie.dispatchAction({
-                    type: "downplay",
-                    seriesIndex: 0,
-                    dataIndex
-                });
-                dataIndex = (dataIndex + 1) % dataLen;
-                pie.dispatchAction({
-                    type: "highlight",
-                    seriesIndex: 0,
-                    dataIndex
-                });
-                // 显示 tooltip
-                pie.dispatchAction({
-                    type: "showTip",
-                    seriesIndex: 0,
-                    dataIndex
-                });
-            }, 1000);
+        handleLegendChanged() {
         },
-        stopActions() {
-            clearInterval(this.actionTimer);
+        handleCheckboxChange(name) {
+            const map = this.$refs.map
+            map.dispatchAction({
+                type: 'legendToggleSelect',
+                name
+            })
         }
     },
     watch: {
@@ -130,16 +142,28 @@ export default {
             );
         },
     },
-    mounted() {
-        this.startActions();
-    },
 };
 </script>
 
 <style scoped>
 .chart {
-    height: 400px;
+    height: 550px;
 }
+
+.checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.checkbox-item {
+    width: 130px;
+    line-height: 20px;
+    margin: 5px 0;
+    text-align: left;
+    font-weight: bolder;
+}
+
 figure {
     display: inline-block;
     position: relative;

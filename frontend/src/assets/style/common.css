@@ -1,6 +1,9 @@
 .h100 {
     height: 100%;
 }
+.w100 {
+    width: 100%;
+}
 .ml10 { margin-left:10px }
 .ml20 { margin-left:20px }
 .mr10 { margin-right:10px }
@@ -16,3 +19,6 @@
 .grey { background-color: #909399; }
 
 .line1 {border-bottom: 1px solid #EBEEF5; }
+.pointer {
+    cursor: pointer;
+}

@@ -15,12 +15,12 @@
                 <span>Dashboard</span>
             </template>
             <el-menu-item-group>
-                <template #title>分组一</template>
-                <el-menu-item index="1-1" @click="this.$router.push('/')">首页</el-menu-item>
+                <template #title>Group 1</template>
+                <el-menu-item index="1-1" @click="this.$router.push('/')">Main</el-menu-item>
             </el-menu-item-group>
 
-            <el-menu-item-group title="Variants">
-                <el-menu-item index="1-3" @click="this.$router.push('/variants')">选项1</el-menu-item>
+            <el-menu-item-group title="Group 2">
+                <el-menu-item index="1-3" @click="this.$router.push('/variants')">variants</el-menu-item>
             </el-menu-item-group>
         </el-submenu>
         <el-menu-item index="2" @click="this.$router.push('/news')">
@@ -29,7 +29,7 @@
         </el-menu-item>
         <el-menu-item index="4">
             <i class="el-icon-setting"></i>
-            <template #title>导航四</template>
+            <template #title>Settings</template>
         </el-menu-item>
     </el-menu>
 </template>

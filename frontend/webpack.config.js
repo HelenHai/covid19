@@ -3,7 +3,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
+const {VueLoaderPlugin} = require('vue-loader')
 
 const resolvePath = inputPath => path.join(__dirname, inputPath)
 const isProd = process.env.NODE_ENV === 'production'
@@ -20,6 +20,18 @@ webpackConfig = {
         publicPath: isProd ? './' : '/'
     },
     devServer: {
+        proxy: { // 虚拟代理
+            '/api': {
+                target: 'http://localhost:3000',
+                ws: true,
+                changeOrigin: true, // 在本地创建一个虚拟服务端
+                pathRewrite: {
+                    // 这里会把当前域名下路径/FreightTransport开头的地方替换为http://127.0.0.1:8099/API【这样就可以和服务器nginx保持一致的路径
+                    "^/api": '',
+                }
+            }
+        },
+
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
@@ -86,9 +98,22 @@ webpackConfig = {
             chunks: 'all'
         },
     },
+    experiments: {
+        topLevelAwait: true
+    }
+    // pages: {
+    //     index: 'src/main.js',
+    //     template: "public/index.html",
+    //     filename: 'index.html',
+    //     title: 'COVID-19 Dashboard',
+    //     // 加入 bmap 词条
+    //     externals: {
+    //         BMap: 'BMap'
+    //     },
+    // },
 }
 
-if(isProd) {
+if (isProd) {
     webpackConfig.plugins.push(
         // 每次 build 清空 output 目录
         new CleanWebpackPlugin(resolvePath('../vue-dist'))

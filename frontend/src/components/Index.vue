@@ -4,8 +4,8 @@
             <Navigation></Navigation>
             <el-container>
                 <el-header class="line1">
-                        <i v-if="!isCollapse" class="el-icon-s-fold" @click="toggleNavBar"></i>
-                        <i v-else class="el-icon-s-unfold" @click="toggleNavBar"></i>
+                    <i v-if="!isCollapse" class="el-icon-s-fold pointer" @click="toggleNavBar"></i>
+                    <i v-else class="el-icon-s-unfold pointer" @click="toggleNavBar"></i>
                 </el-header>
                 <el-main class="bg">
                     <Breadcrumb></Breadcrumb>
@@ -13,12 +13,11 @@
                         <router-view/>
                     </div>
                 </el-main>
-<!--                <el-footer>developed by Xin Hai</el-footer>-->
-                <div class="el-footer">
-                    <span>Developed by Xin Hai</span>
-                    <i class="el-icon-service ml10"></i>
-                    <span class="ml10">xin.hai@postgrad.manchester.ac.uk</span>
-                </div>
+<!--                <div class="el-footer">-->
+<!--                    <span>Developed by Xin Hai</span>-->
+<!--                    <i class="el-icon-service ml10"></i>-->
+<!--                    <span class="ml10">xin.hai@postgrad.manchester.ac.uk</span>-->
+<!--                </div>-->
             </el-container>
         </el-container>
 
@@ -61,24 +60,15 @@ export default {
 </script>
 
 <style lang="less">
-.el-header{
+.el-header {
     color: #333;
     line-height: 60px;
 }
 
 .el-footer {
-    height: 40px;
     text-align: center;
-    line-height: 40px;
+    line-height: 60px;
     font-size: 11px;
-}
-
-.el-header {
-    background-color: white;
-
-    .el-icon-s-fold {
-        cursor: pointer;
-    }
 }
 
 .el-main {
@@ -91,6 +81,7 @@ export default {
 body > .el-container {
     margin-bottom: 40px;
 }
+
 .bg {
     background-color: #eff2f5;
 }
